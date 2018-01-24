@@ -1,0 +1,14 @@
+{
+  "name": "blockchain-explorer",
+  "description": "An explorer for Exonum blockchains",
+  "version": "0.0.1",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "request": "^2.83.0",
+    "riot": "^3.8.1",
+    "riot-route": "^3.1.2"
+  }
+}
