@@ -16,7 +16,7 @@ Default URL is `http://127.0.0.1:8200`.
 Run node app:
 
 ```sh
-node server.js
+npm start
 ```
 
 Find blockchain explorer at [http://127.0.0.1:8290](http://127.0.0.1:8290) in your browser.
