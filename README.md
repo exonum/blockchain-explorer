@@ -25,7 +25,6 @@ Find blockchain explorer at [http://127.0.0.1:8290](http://127.0.0.1:8290) in yo
 
 * [https://github.com/quicky84/exonum-block-explorer](https://github.com/quicky84/exonum-block-explorer)
 
-## License
+## LICENSE
 
-Exonum Blockchain Explorer is licensed under the Apache License (Version 2.0).
-See [LICENSE](LICENSE) for details.
+Exonum Blockchain Explorer is licensed under the Apache License (Version 2.0). See [LICENSE](https://github.com/exonum/blockchain-explorer/blob/master/LICENSE) for details.
