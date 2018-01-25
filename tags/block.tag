@@ -39,7 +39,7 @@
         </tbody>
     </table>
 
-    <table class="table">
+    <table class="table" if={ transactions && transactions.length > 0 }>
         <caption>Block transactions</caption>
         <thead>
         <tr>
