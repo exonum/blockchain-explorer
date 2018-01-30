@@ -1,9 +1,8 @@
 <block>
-    <h3>
-        <a href="#">Blockchain Explorer</a>
-        /
-        Block { opts.height }
-    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#">Explorer</a></li>
+        <li class="active">Block { opts.height }</li>
+    </ol>
 
     <table class="table table-bordered">
         <caption>Block details</caption>
@@ -55,38 +54,21 @@
         </tbody>
     </table>
 
-    <div class="form-group">
-        <div class="row">
-            <div class="col-sm-6">
-                <button class="btn btn-lg btn-block btn-default" onclick={ previous }>
-                    Previous block
-                </button>
-            </div>
-            <div class="col-sm-6">
-                <button class="btn btn-lg btn-block btn-default" onclick={ next }>
-                    Next block
-                </button>
-            </div>
-        </div>
-    </div>
+    <nav>
+        <ul class="pager">
+            <li><a href="#block/{ height - 1 }">&larr; Previous block</a></li>
+            <li><a href="#block/{ height + 1 }">Next block &rarr;</a></li>
+        </ul>
+    </nav>
 
     <script>
         var self = this;
-        var height = parseInt(this.opts.height);
 
-        previous(e) {
-            e.preventDefault();
-            route('/block/' + (height - 1));
-        }
-
-        next(e) {
-            e.preventDefault();
-            route('/block/' + (height + 1));
-        }
+        this.height = parseInt(this.opts.height);
 
         $.ajax({
             method: 'GET',
-            url: '/api/explorer/v1/blocks/' + height,
+            url: '/api/explorer/v1/blocks/' + self.height,
             dataType: 'json',
             success: function(response) {
                 if (typeof response === 'object') {
