@@ -10,16 +10,21 @@ First, install dependencies:
 npm install
 ```
 
-Update public endpoint URL of Exonum node at [routes/api.js](routes/api.js).
-Default URL is `http://127.0.0.1:8200`.
-
-Run node app:
+Run app:
 
 ```sh
-npm start
+npm start -- --port=3000
 ```
 
-Find blockchain explorer at [http://127.0.0.1:8290](http://127.0.0.1:8290) in your browser.
+Find blockchain explorer at [http://127.0.0.1:3000](http://127.0.0.1:3000) in your browser.
+Default port is `3000`.
+
+Default public endpoint URL of Exonum node is `http://127.0.0.1:8200`.
+It can be changed on app start:
+
+```sh
+npm start -- --endpoint=http://127.0.0.1:8200
+```
 
 ## Alternatives
 

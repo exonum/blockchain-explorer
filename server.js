@@ -5,6 +5,11 @@ var bodyParser = require('body-parser');
 // Initialize application
 var app = express();
 
+// Get app params
+var argv = require('yargs-parser')(process.argv.slice(2));
+var port = argv.port || '3000';
+app.set('endpoint', argv.endpoint || 'http://127.0.0.1:8200');
+
 // Configure parsers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,4 +26,4 @@ app.get('/', function(req, res) {
     res.sendFile('index.html');
 });
 
-app.listen(8290);
+app.listen(port);
