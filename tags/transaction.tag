@@ -1,11 +1,9 @@
 <transaction>
-    <h3>
-        <a href="#">Blockchain Explorer</a>
-        /
-        <a href="#block/{ location.block_height }">Block { location.block_height }</a>
-        /
-        Transaction { opts.hash }
-    </h3>
+    <ol class="breadcrumb">
+        <li><a href="#">Explorer</a></li>
+        <li><a href="#block/{ location.block_height }">Block { location.block_height }</a></li>
+        <li class="active">Transaction { opts.hash }</li>
+    </ol>
 
     <table class="table table-bordered">
         <caption>Transaction details</caption>
@@ -36,6 +34,12 @@
         </tr>
         </tbody>
     </table>
+
+    <nav>
+        <ul class="pager">
+            <li><a href="#block/{ location.block_height }">&uparrow; Back to block</a></li>
+        </ul>
+    </nav>
 
     <script>
         var self = this;

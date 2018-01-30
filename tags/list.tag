@@ -1,7 +1,10 @@
 <list>
-    <h3>Blockchain Explorer</h3>
+    <ol class="breadcrumb">
+        <li class="active">Explorer</li>
+    </ol>
 
     <table class="table">
+        <caption>Latest blocks</caption>
         <thead>
         <tr>
             <th>height</th>
@@ -18,15 +21,11 @@
         </tbody>
     </table>
 
-    <div class="form-group">
-        <div class="row">
-            <div class="col-sm-12">
-                <button class="btn btn-lg btn-block btn-default" onclick={ more }>
-                    Older blocks
-                </button>
-            </div>
-        </div>
-    </div>
+    <nav>
+        <ul class="pager">
+            <li><a href="#" onclick={ more }>Load older blocks</a></li>
+        </ul>
+    </nav>
 
     <script>
         var self = this;
