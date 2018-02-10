@@ -1,17 +1,16 @@
 <navbar>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-light bg-light mb-5">
         <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Blockchain Explorer</a>
-            </div>
+            <a class="navbar-brand" href="#">
+                <img src="/assets/images/logo.png" width="41" height="36" class="d-inline-block .align-middle" alt="">
+                Blockchain Explorer
+            </a>
 
-            <p class="navbar-text"><span class="badge">{ mempool }</span> txs in mempool</p>
+            <span class="navbar-text"><span class="badge badge-secondary">{ mempool }</span> txs in mempool</span>
 
-            <form class="navbar-form navbar-right" onsubmit={ submit }>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Block height or tx hash" onkeyup="{ editQuery }">
-                </div>
-                <button type="submit" class="btn btn-default">Search</button>
+            <form class="form-inline" onsubmit={ submit }>
+                <input class="form-control mr-sm-2" type="search" placeholder="Block height or tx hash" aria-label="Search" onkeyup="{ editQuery }">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
