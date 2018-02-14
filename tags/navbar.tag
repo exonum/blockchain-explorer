@@ -2,7 +2,7 @@
     <nav class="navbar navbar-light bg-light mb-5">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="/assets/images/logo.png" width="41" height="36" class="d-inline-block .align-middle" alt="">
+                <img src="/assets/images/logo.png" width="41" height="36" class="d-inline-block" alt="">
                 Blockchain Explorer
             </a>
 
