@@ -9,7 +9,8 @@
         </div>
     </div>
 
-    <footer class="bg-light mt-5 pt-5 pb-4">
+    <footer class="pb-4 hr">
+        <hr class="mt-5 mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
