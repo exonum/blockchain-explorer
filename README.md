@@ -2,24 +2,40 @@
 
 An application for monitoring blocks and transactions in Exonum blockchain.
 
-## Install
-
 First, install dependencies:
 
 ```sh
 npm install
 ```
 
-Update public endpoint URL of Exonum node at [routes/api.js](routes/api.js).
-Default URL is `http://127.0.0.1:8200`.
+## Starting as a Node.JS server
 
-Run node app:
+Build sources:
 
 ```sh
-npm start
+npm run build
 ```
 
-Find blockchain explorer at [http://127.0.0.1:8290](http://127.0.0.1:8290) in your browser.
+Run app:
+
+```sh
+npm start -- --port=3000 --api-root=http://127.0.0.1:8300
+```
+
+`--port` is a port for Node.JS app.
+
+`--api-root` is a root URL of Exonum node public API.
+
+## Build a static html pages
+
+CORS headers must be setted up in Exonum node configuration to use the application as static html pages.
+See `allow_origin` parameter in [Exonum docs](https://exonum.com/doc/architecture/configuration/#api).
+
+Build sources:
+
+```sh
+npm run static -- --api-root=http://127.0.0.1:8300
+```
 
 ## Alternatives
 

@@ -1,6 +1,18 @@
 <list>
     <div class="card">
-        <div class="card-header">{ count } Latest blocks</div>
+        <div class="card-header">Mempool</div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-sm-3"><strong>Transactions:</strong></div>
+                    <div class="col-sm-9">{ mempool }</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header">Latest blocks</div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item font-weight-bold">
                 <div class="row">
@@ -18,14 +30,34 @@
             </li>
         </ul>
         <div class="card-body text-center">
-            <a href="#" class="btn btn-primary" onclick={ more }>Load { count } older blocks</a>
+            <a href="#" class="btn btn-primary" onclick={ more }>Load older blocks</a>
         </div>
     </div>
 
     <script>
         var self = this;
+        var mempoolPollingInterval = 3000;
+        var perPage = 10;
 
-        this.count = 10;
+        function mempoolPolling() {
+            $.ajax({
+                method: 'GET',
+                url: '/api/system/v1/mempool',
+                dataType: 'json',
+                success: function(response) {
+                    if (typeof response === 'object') {
+                        self.mempool = response.size;
+                        self.update();
+                        setTimeout(mempoolPolling, mempoolPollingInterval);
+                    } else {
+                        console.error(new TypeError('Unknown format of server response'));
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error(errorThrown);
+                }
+            });
+        }
 
         function getBlocks(latest) {
             var suffix = '';
@@ -36,7 +68,7 @@
 
             $.ajax({
                 method: 'GET',
-                url: '/api/explorer/v1/blocks?count=' + self.count + suffix,
+                url: '/api/explorer/v1/blocks?count=' + perPage + suffix,
                 dataType: 'json',
                 success: function(response) {
                     if (typeof response === 'object') {
@@ -60,5 +92,7 @@
         this.blocks = [];
 
         getBlocks();
+
+        mempoolPolling();
     </script>
 </list>

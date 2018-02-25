@@ -2,11 +2,9 @@
     <nav class="navbar navbar-light bg-light mb-5">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="/assets/images/logo.png" width="41" height="36" class="d-inline-block" alt="">
+                <img src="assets/images/logo.png" width="41" height="36" class="d-inline-block" alt="">
                 Blockchain Explorer
             </a>
-
-            <span class="navbar-text"><span class="badge badge-secondary">{ mempool }</span> txs in mempool</span>
 
             <form class="form-inline" onsubmit={ submit }>
                 <input class="form-control mr-sm-2" type="search" placeholder="Block height or tx hash" aria-label="Search" onkeyup="{ editQuery }">
@@ -16,9 +14,6 @@
     </nav>
 
     <script>
-        var self = this;
-        var mempoolPollingInterval = 3000;
-
         function validateHash(hash) {
             var bytes = 32;
 
@@ -38,26 +33,6 @@
 
             return true;
         }
-
-        (function mempoolPolling() {
-            $.ajax({
-                method: 'GET',
-                url: '/api/system/v1/mempool',
-                dataType: 'json',
-                success: function(response) {
-                    if (typeof response === 'object') {
-                        self.mempool = response.size;
-                        self.update();
-                        setTimeout(mempoolPolling, mempoolPollingInterval);
-                    } else {
-                        console.error(new TypeError('Unknown format of server response'));
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error(errorThrown);
-                }
-            });
-        })();
 
         editQuery(e) {
             this.query = e.target.value;

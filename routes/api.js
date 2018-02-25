@@ -1,13 +1,12 @@
 var express = require('express');
 var request = require('request');
 var router = express.Router();
-var endpoint = 'http://127.0.0.1:8200';
 
 router.get('/*', function(req, res, next) {
     var query = req.params[0];
 
     request.get({
-        url: endpoint + '/api/' + query,
+        url: req.app.get('apiRoot') + '/api/' + query,
         qs: req.query
     }, function(err, response, body) {
         if (err) {
@@ -25,7 +24,7 @@ router.post('/*', function(req, res, next) {
     var query = req.params[0];
 
     request.post({
-            url: endpoint + '/api/' + query,
+            url: req.app.get('apiRoot') + '/api/' + query,
             json: req.body
         },
         function(err, response, body) {
