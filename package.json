@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node server.js",
-    "prepare": "./node_modules/grunt/bin/grunt"
+    "build": "./node_modules/grunt/bin/grunt",
+    "static": "./node_modules/grunt/bin/grunt static"
   },
   "dependencies": {
     "big-integer": "^1.6.26",
@@ -18,6 +19,8 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "grunt": "^1.0.2",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-replace": "^1.0.1",
     "grunt-riot": "^0.1.8",
     "load-grunt-tasks": "^3.5.2",
     "request": "^2.83.0",

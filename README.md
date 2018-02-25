@@ -13,7 +13,7 @@ npm install
 Build sources:
 
 ```sh
-npm build
+npm run build
 ```
 
 Run app:
@@ -25,6 +25,17 @@ npm start -- --port=3000 --api-root=http://127.0.0.1:8300
 `--port` is a port for Node.JS app.
 
 `--api-root` is a root URL of Exonum node public API.
+
+## Build a static html pages
+
+CORS headers must be setted up in Exonum node configuration to use the application as static html pages.
+See `allow_origin` parameter in [Exonum docs](https://exonum.com/doc/architecture/configuration/#api).
+
+Build sources:
+
+```sh
+npm run static -- --api-root=http://127.0.0.1:8300
+```
 
 ## Alternatives
 
