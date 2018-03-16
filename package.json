@@ -1,7 +1,7 @@
 {
   "name": "blockchain-explorer",
   "description": "An explorer for Exonum blockchains",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Exonum Team <exonum@bitfury.com>",
   "license": "Apache-2.0",
   "scripts": {
@@ -28,6 +28,7 @@
     "grunt": "^1.0.2",
     "grunt-browserify": "^5.2.0",
     "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-replace": "^1.0.1",
     "load-grunt-tasks": "^3.5.2",
     "request": "^2.83.0",

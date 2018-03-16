@@ -33,6 +33,15 @@ module.exports = function(grunt) {
         src: 'dist/build.js',
         dest: 'dist/build.js'
       }
+    },
+    watch: {
+      scripts: {
+        files: ['./src/**/*.*'],
+        tasks: ['build'],
+        options: {
+          spawn: false
+        }
+      }
     }
   });
 

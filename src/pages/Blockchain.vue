@@ -22,7 +22,7 @@
             <div class="col-sm-3">Transactions count</div>
           </div>
         </li>
-        <li :for="block in blocks" :key="block.height" class="list-group-item">
+        <li v-for="(block) in blocks" :key="block.height" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
               <router-link :to="{ name: 'block', params: { height: block.height } }">{{ block.height }}</router-link>
@@ -44,9 +44,10 @@
   const PER_PAGE = 10
 
   module.exports = {
-    components: {},
-    data: function() {
-      return {}
+    data() {
+      return {
+        blocks: []
+      }
     },
     methods: {
       loadMempool: function() {

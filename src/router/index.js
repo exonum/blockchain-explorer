@@ -16,12 +16,14 @@ export default new Router({
     {
       path: '/block/:height',
       name: 'block',
-      component: BlockPage
+      component: BlockPage,
+      props: true
     },
     {
       path: '/transaction/:hash',
       name: 'transaction',
-      component: TransactionPage
+      component: TransactionPage,
+      props: true
     }
   ]
 })

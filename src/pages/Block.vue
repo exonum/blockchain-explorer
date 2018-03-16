@@ -71,7 +71,7 @@
             <div class="col-sm-6">Signature</div>
           </div>
         </li>
-        <li :for="precommit in precommits" class="list-group-item">
+        <li v-for="(precommit) in precommits" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">{{ precommit.body.validator }}</div>
             <div class="col-sm-3">{{ moment(bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</div>
@@ -90,7 +90,7 @@
             <div class="col-sm-9">Hash</div>
           </div>
         </li>
-        <li :for="(transaction, index) in transactions" class="list-group-item">
+        <li v-for="(transaction, index) in transactions" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">{{ index }}</div>
             <div class="col-sm-9">
@@ -116,7 +116,7 @@
 
 <script>
   function getPrecommitsMedianTime(precommits) {
-    let values = [];
+    let values = []
 
     for (let i = 0, time; i < precommits.length; i++) {
       time = precommits[i].body.time
@@ -135,12 +135,8 @@
   }
 
   module.exports = {
-    components: {},
     props: {
-      height: Number
-    },
-    data: function() {
-      return {}
+      height: String
     },
     methods: {
       loadBlock: function() {

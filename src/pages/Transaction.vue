@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav aria-label="breadcrumb">
+    <nav v-if="location" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Explorer</a></li>
         <li class="breadcrumb-item">
@@ -82,12 +82,8 @@
 
 <script>
   module.exports = {
-    components: {},
     props: {
       hash: String
-    },
-    data: function() {
-      return {}
     },
     methods: {
       loadTransaction: function() {
