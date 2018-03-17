@@ -39,10 +39,6 @@
 
 <script>
   module.exports = {
-    components: {},
-    data: function() {
-      return {}
-    },
     methods: {
       search: function() {
         if (this.$validateHex(this.query)) {
@@ -51,9 +47,6 @@
           this.$router.push({name: 'block', params: {height: this.query}})
         }
       }
-    },
-    mounted: function() {
-      this.$nextTick(function() {})
     }
   }
 </script>
