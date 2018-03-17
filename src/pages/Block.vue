@@ -2,12 +2,14 @@
   <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Explorer</a></li>
+        <li class="breadcrumb-item">
+          <router-link :to="{ name: 'blockchain' }">Explorer</router-link>
+        </li>
         <li class="breadcrumb-item active" aria-current="page">Block {{ height }}</li>
       </ol>
     </nav>
 
-    <div v-if="block" class="card">
+    <div class="card">
       <div class="card-header">Summary</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -52,16 +54,10 @@
             <div class="col-sm-9">{{ block.tx_hash }}</div>
           </div>
         </li>
-        <li v-if="median" class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Precommits median time:</strong></div>
-            <div class="col-sm-9">{{ moment(median / 1000000).format() }}</div>
-          </div>
-        </li>
       </ul>
     </div>
 
-    <div v-if="precommits" class="card mt-3">
+    <div class="card mt-3">
       <div class="card-header">Precommits</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item font-weight-bold">
@@ -74,14 +70,14 @@
         <li v-for="(precommit) in precommits" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">{{ precommit.body.validator }}</div>
-            <div class="col-sm-3">{{ moment(bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</div>
+            <div class="col-sm-3">{{ $moment($bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</div>
             <div class="col-sm-6">{{ precommit.signature }}</div>
           </div>
         </li>
       </ul>
     </div>
 
-    <div v-if="transactions && transactions.length > 0" class="card mt-3">
+    <div class="card mt-3">
       <div class="card-header">Transactions</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item font-weight-bold">
@@ -104,10 +100,10 @@
     <nav class="mt-5" aria-label="Nearby blocks navigation">
       <ul class="pagination justify-content-center">
         <li class="page-item">
-          <router-link :to="{ name: 'block', params: { height: height - 1 } }" class="page-link">&larr; Previous block</router-link>
+          <router-link :to="{ name: 'block', params: { height: previous } }" class="page-link">&larr; Previous block</router-link>
         </li>
         <li class="page-item">
-          <router-link :to="{ name: 'block', params: { height: height + 1 } }" class="page-link">Next block &rarr;</router-link>
+          <router-link :to="{ name: 'block', params: { height: next } }" class="page-link">Next block &rarr;</router-link>
         </li>
       </ul>
     </nav>
@@ -115,28 +111,24 @@
 </template>
 
 <script>
-  function getPrecommitsMedianTime(precommits) {
-    let values = []
-
-    for (let i = 0, time; i < precommits.length; i++) {
-      time = precommits[i].body.time
-      values.push(bigInt(time.secs).multiply(1000000000).plus(time.nanos))
-    }
-
-    values.sort((a, b) => a.compare(b))
-
-    const half = Math.floor(values.length / 2)
-
-    if (values.length % 2) {
-      return values[half].toString()
-    } else {
-      return values[half - 1].plus(values[half]).divide(2).toString()
-    }
-  }
-
   module.exports = {
     props: {
       height: String
+    },
+    data: function() {
+      return {
+        block: Object,
+        precommits: Array,
+        transactions: Array
+      }
+    },
+    computed: {
+      previous: function() {
+        return (parseInt(this.height) - 1).toString()
+      },
+      next: function() {
+        return (parseInt(this.height) + 1).toString()
+      }
     },
     methods: {
       loadBlock: function() {
@@ -145,7 +137,6 @@
         this.$http.get('/api/explorer/v1/blocks/' + this.height).then(response => {
           if (typeof response.data === 'object') {
             self.block = response.data.block
-            self.median = getPrecommitsMedianTime(response.data.precommits)
             self.precommits = response.data.precommits
             self.transactions = response.data.txs
           } else {

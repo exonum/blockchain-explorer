@@ -90,6 +90,7 @@
     },
     mounted: function() {
       this.$nextTick(function() {
+        this.loadMempool()
         this.loadBlocks()
       })
     }

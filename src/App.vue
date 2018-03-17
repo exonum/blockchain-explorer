@@ -2,10 +2,10 @@
   <div>
     <nav class="navbar navbar-light bg-light mb-5">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <router-link :to="{ name: 'blockchain' }" class="navbar-brand">
           <img src="images/logo.png" width="41" height="36" class="d-inline-block" alt="">
           Blockchain Explorer
-        </a>
+        </router-link>
         <form class="form-inline" @submit.prevent="search">
           <input v-model="query" class="form-control mr-sm-2" type="search" placeholder="Block height or tx hash" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

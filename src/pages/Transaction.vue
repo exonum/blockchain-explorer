@@ -1,19 +1,21 @@
 <template>
   <div>
-    <nav v-if="location" aria-label="breadcrumb">
+    <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Explorer</a></li>
         <li class="breadcrumb-item">
-          <router-link :to="{ name: 'block', params: { height: location.block_height } }">{{ location.block_height }}</router-link>
+          <router-link :to="{ name: 'blockchain' }">Explorer</router-link>
+        </li>
+        <li class="breadcrumb-item">
+          <router-link :to="{ name: 'block', params: { height: location.block_height } }">Block {{ location.block_height }}</router-link>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Transaction {{ hash }}</li>
       </ol>
     </nav>
 
-    <div v-if="transaction" class="card">
+    <div class="card">
       <div class="card-header">Summary</div>
       <ul class="list-group list-group-flush">
-        <li v-if="type" class="list-group-item">
+        <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Type:</strong></div>
             <div class="col-sm-9">{{ type }}</div>
@@ -58,7 +60,7 @@
       </ul>
     </div>
 
-    <div v-if="location" class="card mt-3">
+    <div class="card mt-3">
       <div class="card-header">Location</div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -85,11 +87,18 @@
     props: {
       hash: String
     },
+    data: function() {
+      return {
+        transaction: Object,
+        location: Object,
+        type: String
+      }
+    },
     methods: {
       loadTransaction: function() {
         const self = this
 
-        this.$http.get('/api/explorer/v1/transactions/' + this.hash).then(response => {
+        this.$http.get('/api/system/v1/transactions/' + this.hash).then(response => {
           if (typeof response.data === 'object') {
             self.transaction = response.data.content
             self.location = response.data.location
