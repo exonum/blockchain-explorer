@@ -43,4 +43,5 @@ npm run static -- --api-root=http://127.0.0.1:8300
 
 ## LICENSE
 
-Exonum Blockchain Explorer is licensed under the Apache License (Version 2.0). See [LICENSE](https://github.com/exonum/blockchain-explorer/blob/master/LICENSE) for details.
+Exonum Blockchain Explorer is licensed under the Apache License (Version 2.0).
+See [LICENSE](https://github.com/exonum/blockchain-explorer/blob/master/LICENSE) for details.
