@@ -94,6 +94,13 @@
             </div>
           </div>
         </li>
+        <li v-if="transactions.length === 0" class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <em class="text-secondary">There are no transactions in the block</em>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
 
