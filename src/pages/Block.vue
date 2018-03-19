@@ -130,6 +130,11 @@
         return (parseInt(this.height) + 1).toString()
       }
     },
+    watch: {
+      height: function() {
+        this.loadBlock()
+      }
+    },
     methods: {
       loadBlock: function() {
         const self = this
