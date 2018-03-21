@@ -109,10 +109,26 @@
         }
 
         // Provide support for 0.5 and 0.6 Exonum versions
-        this.$http.get('/api/system/v1/transactions/' + this.hash).then(parseResponse).catch(() => {
-          this.$http.get('/api/explorer/v1/transactions/' + this.hash).then(parseResponse).catch(error => {
-            console.error(error)
-          })
+        this.$http.get('/api/system/v1/transactions/' + this.hash).then(response => {
+          if (response.data.content) {
+            self.transaction = response.data.content
+            self.location = response.data.location
+            self.type = response.data.type
+          } else {
+            self.$http.get('/api/explorer/v1/transactions/' + self.hash).then(response => {
+              if (response.data.content) {
+                self.transaction = response.data.content
+                self.location = response.data.location
+                self.type = response.data.type
+              } else {
+                console.error(new TypeError('Unknown format of server response'))
+              }
+            }).catch(error => {
+              console.error(error)
+            })
+          }
+        }).catch(error => {
+          console.error(error)
         })
       }
     },
