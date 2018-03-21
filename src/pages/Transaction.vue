@@ -21,12 +21,6 @@
             <div class="col-sm-9">{{ type }}</div>
           </div>
         </li>
-        <li v-if="status" class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Status:</strong></div>
-            <div class="col-sm-9">{{ status }}</div>
-          </div>
-        </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Protocol version:</strong></div>
@@ -104,17 +98,21 @@
       loadTransaction: function() {
         const self = this
 
-        this.$http.get('/api/system/v1/transactions/' + this.hash).then(response => {
+        function parseResponse(response) {
           if (typeof response.data === 'object') {
             self.transaction = response.data.content
             self.location = response.data.location
             self.type = response.data.type
-            self.status = response.data.status
           } else {
             console.error(new TypeError('Unknown format of server response'))
           }
-        }).catch(error => {
-          console.error(error)
+        }
+
+        // Provide support for 0.5 and 0.6 Exonum versions
+        this.$http.get('/api/system/v1/transactions/' + this.hash).then(parseResponse).catch(() => {
+          this.$http.get('/api/explorer/v1/transactions/' + this.hash).then(parseResponse).catch(error => {
+            console.error(error)
+          })
         })
       }
     },

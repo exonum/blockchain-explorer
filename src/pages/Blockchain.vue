@@ -69,12 +69,14 @@
         const self = this
         let suffix = ''
 
+        // Provide support for 0.5 and 0.6 Exonum versions
         if (!isNaN(parseInt(latest)) || !isNaN(latest)) {
           suffix += '&latest=' + latest
         }
 
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
           if (typeof response.data === 'object') {
+            // Provide support for 0.5 and 0.6 Exonum versions
             if (Array.isArray(response.data.blocks)) {
               self.blocks = self.blocks.concat(response.data.blocks)
             } else {
