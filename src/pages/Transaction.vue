@@ -15,10 +15,16 @@
     <div class="card">
       <div class="card-header">Summary</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">
+        <li v-if="type" class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Type:</strong></div>
             <div class="col-sm-9">{{ type }}</div>
+          </div>
+        </li>
+        <li v-if="status" class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Status:</strong></div>
+            <div class="col-sm-9">{{ status }}</div>
           </div>
         </li>
         <li class="list-group-item">
@@ -103,6 +109,7 @@
             self.transaction = response.data.content
             self.location = response.data.location
             self.type = response.data.type
+            self.status = response.data.status
           } else {
             console.error(new TypeError('Unknown format of server response'))
           }

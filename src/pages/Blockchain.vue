@@ -69,13 +69,17 @@
         const self = this
         let suffix = ''
 
-        if (!isNaN(latest)) {
+        if (!isNaN(parseInt(latest)) || !isNaN(latest)) {
           suffix += '&latest=' + latest
         }
 
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
           if (typeof response.data === 'object') {
-            self.blocks = self.blocks.concat(response.data)
+            if (Array.isArray(response.data.blocks)) {
+              self.blocks = self.blocks.concat(response.data.blocks)
+            } else {
+              self.blocks = self.blocks.concat(response.data)
+            }
           } else {
             console.error(new TypeError('Unknown format of server response'))
           }
