@@ -13,7 +13,13 @@
     </div>
 
     <div class="card mt-3">
-      <div class="card-header">Latest blocks</div>
+      <div class="card-header d-flex justify-content-between">
+        Latest blocks
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" v-model="skip" v-on:change="skipChange" class="custom-control-input" id="skip-empty-blocks">
+          <label class="custom-control-label" for="skip-empty-blocks">Skip empty blocks</label>
+        </div>
+      </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item font-weight-bold">
           <div class="row">
@@ -74,6 +80,10 @@
           suffix += '&latest=' + latest
         }
 
+        if (this.skip) {
+            suffix += '&skip_empty_blocks=true'
+        }
+
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
           if (typeof response.data === 'object') {
             // Provide support for 0.5 and 0.6 Exonum versions
@@ -92,6 +102,11 @@
 
       loadMore: function() {
         this.loadBlocks(this.blocks[this.blocks.length - 1].height)
+      },
+
+      skipChange: function() {
+        this.blocks = [];
+        this.loadBlocks();
       }
     },
     mounted: function() {
