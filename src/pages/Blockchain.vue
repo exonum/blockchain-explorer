@@ -16,7 +16,7 @@
       <div class="card-header d-flex justify-content-between">
         Latest blocks
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" v-model="skip" v-on:change="skipChange" class="custom-control-input" id="skip-empty-blocks">
+          <input type="checkbox" v-model="isSkipEmpty" v-on:change="skipChange" class="custom-control-input" id="skip-empty-blocks">
           <label class="custom-control-label" for="skip-empty-blocks">Skip empty blocks</label>
         </div>
       </div>
@@ -52,7 +52,8 @@
   module.exports = {
     data() {
       return {
-        blocks: []
+        blocks: [],
+        isSkipEmpty: false
       }
     },
     methods: {
@@ -60,12 +61,8 @@
         const self = this
 
         this.$http.get('/api/system/v1/mempool').then(response => {
-          if (typeof response.data === 'object') {
-            self.mempoolSize = response.data.size
-            setTimeout(self.loadMempool, POOLING_INTERVAL)
-          } else {
-            console.error(new TypeError('Unknown format of server response'))
-          }
+          self.mempoolSize = response.data.size
+          setTimeout(self.loadMempool, POOLING_INTERVAL)
         }).catch(error => {
           console.error(error)
         })
@@ -75,33 +72,23 @@
         const self = this
         let suffix = ''
 
-        // Provide support for 0.5 and 0.6 Exonum versions
-        if (!isNaN(parseInt(latest)) || !isNaN(latest)) {
+        if (!isNaN(parseInt(latest))) {
           suffix += '&latest=' + latest
         }
 
-        if (this.skip) {
-            suffix += '&skip_empty_blocks=true'
+        if (this.isSkipEmpty) {
+          suffix += '&skip_empty_blocks=true'
         }
 
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
-          if (typeof response.data === 'object') {
-            // Provide support for 0.5 and 0.6 Exonum versions
-            if (Array.isArray(response.data.blocks)) {
-              self.blocks = self.blocks.concat(response.data.blocks)
-            } else {
-              self.blocks = self.blocks.concat(response.data)
-            }
-          } else {
-            console.error(new TypeError('Unknown format of server response'))
-          }
+          self.blocks = self.blocks.concat(response.data.blocks)
         }).catch(error => {
           console.error(error)
         })
       },
 
       loadMore: function() {
-        this.loadBlocks(this.blocks[this.blocks.length - 1].height)
+        this.loadBlocks(this.blocks[this.blocks.length - 1].height - 1)
       },
 
       skipChange: function() {

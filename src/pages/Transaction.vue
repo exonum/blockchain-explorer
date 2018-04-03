@@ -15,10 +15,16 @@
     <div class="card">
       <div class="card-header">Summary</div>
       <ul class="list-group list-group-flush">
-        <li v-if="type" class="list-group-item">
+        <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Type:</strong></div>
             <div class="col-sm-9">{{ type }}</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Status:</strong></div>
+            <div class="col-sm-9">{{ status.type }}</div>
           </div>
         </li>
         <li class="list-group-item">
@@ -89,44 +95,21 @@
     },
     data: function() {
       return {
-        transaction: Object,
-        location: Object,
-        type: String
+        transaction: {},
+        location: {},
+        type: '',
+        status: {}
       }
     },
     methods: {
       loadTransaction: function() {
         const self = this
 
-        function parseResponse(response) {
-          if (typeof response.data === 'object') {
-            self.transaction = response.data.content
-            self.location = response.data.location
-            self.type = response.data.type
-          } else {
-            console.error(new TypeError('Unknown format of server response'))
-          }
-        }
-
-        // Provide support for 0.5 and 0.6 Exonum versions
-        this.$http.get('/api/system/v1/transactions/' + this.hash).then(response => {
-          if (response.data.content) {
-            self.transaction = response.data.content
-            self.location = response.data.location
-            self.type = response.data.type
-          } else {
-            self.$http.get('/api/explorer/v1/transactions/' + self.hash).then(response => {
-              if (response.data.content) {
-                self.transaction = response.data.content
-                self.location = response.data.location
-                self.type = response.data.type
-              } else {
-                console.error(new TypeError('Unknown format of server response'))
-              }
-            }).catch(error => {
-              console.error(error)
-            })
-          }
+        this.$http.get('/api/explorer/v1/transactions/' + this.hash).then(response => {
+          self.transaction = response.data.content
+          self.location = response.data.location
+          self.type = response.data.type
+          self.status = response.data.status
         }).catch(error => {
           console.error(error)
         })

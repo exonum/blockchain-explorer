@@ -124,9 +124,9 @@
     },
     data: function() {
       return {
-        block: Object,
-        precommits: Array,
-        transactions: Array
+        block: {},
+        precommits: [],
+        transactions: []
       }
     },
     computed: {
@@ -147,13 +147,9 @@
         const self = this
 
         this.$http.get('/api/explorer/v1/blocks/' + this.height).then(response => {
-          if (typeof response.data === 'object') {
-            self.block = response.data.block
-            self.precommits = response.data.precommits
-            self.transactions = response.data.txs
-          } else {
-            console.error(new TypeError('Unknown format of server response'))
-          }
+          self.block = response.data.block
+          self.precommits = response.data.precommits
+          self.transactions = response.data.txs
         }).catch(error => {
           console.error(error)
         })
