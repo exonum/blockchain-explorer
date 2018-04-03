@@ -41,6 +41,14 @@ npm run static -- --api-root=http://127.0.0.1:8300
 
 * [https://github.com/quicky84/exonum-block-explorer](https://github.com/quicky84/exonum-block-explorer)
 
+## Use with outdated Exonum core
+
+To use explorer with Exonum core 0.5 and below:
+
+```sh
+git checkout 467b651689d7d4fd369084948ef92a5b0fa11f2a 
+``` 
+
 ## LICENSE
 
 Exonum Blockchain Explorer is licensed under the Apache License (Version 2.0).
