@@ -105,7 +105,7 @@
       loadTransaction: function() {
         const self = this
 
-        this.$http.get('/api/explorer/v1/transactions/' + this.hash).then(response => {
+        this.$http.get('/api/explorer/v1/transactions?hash=' + this.hash).then(response => {
           self.transaction = response.data.content
           self.location = response.data.location
           self.type = response.data.type
