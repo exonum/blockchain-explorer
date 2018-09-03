@@ -32,12 +32,6 @@
         </li>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Schema version:</strong></div>
-            <div class="col-sm-9">{{ block.schema_version }}</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
             <div class="col-sm-3"><strong>Blockchain state hash:</strong></div>
             <div class="col-sm-9">{{ block.state_hash }}</div>
           </div>
@@ -146,7 +140,7 @@
       loadBlock: function() {
         const self = this
 
-        this.$http.get('/api/explorer/v1/blocks?height=' + this.height).then(response => {
+        this.$http.get('/api/explorer/v1/block?height=' + this.height).then(response => {
           self.block = response.data.block
           self.precommits = response.data.precommits
           self.transactions = response.data.txs
