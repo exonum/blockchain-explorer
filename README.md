@@ -43,11 +43,17 @@ npm run static -- --api-root=http://127.0.0.1:8300
 
 ## Use with outdated Exonum core
 
+To use explorer with Exonum core 0.8 and below:
+
+```sh
+git checkout f373661b8f780309fd3bfa2e351c21daa2a50d95 
+```
+
 To use explorer with Exonum core 0.5 and below:
 
 ```sh
 git checkout 467b651689d7d4fd369084948ef92a5b0fa11f2a 
-``` 
+```
 
 ## LICENSE
 

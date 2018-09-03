@@ -5,7 +5,7 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Transactions:</strong></div>
+            <div class="col-sm-3"><strong>Size:</strong></div>
             <div class="col-sm-9">{{ mempoolSize }}</div>
           </div>
         </li>
@@ -23,7 +23,7 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item font-weight-bold">
           <div class="row">
-            <div class="col-sm-3">Block height</div>
+            <div class="col-sm-3">Height</div>
             <div class="col-sm-6">Blockchain state hash</div>
             <div class="col-sm-3">Transactions count</div>
           </div>
