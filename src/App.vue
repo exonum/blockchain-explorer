@@ -39,12 +39,17 @@
 
 <script>
   module.exports = {
+    data() {
+      return {
+        query: ''
+      }
+    },
     methods: {
       search: function() {
         if (this.$validateHex(this.query)) {
-          this.$router.push({name: 'transaction', params: {hash: this.query}})
+          this.$router.push({ name: 'transaction', params: { hash: this.query } })
         } else if (!isNaN(parseInt(this.query))) {
-          this.$router.push({name: 'block', params: {height: this.query}})
+          this.$router.push({ name: 'block', params: { height: this.query } })
         }
       }
     }

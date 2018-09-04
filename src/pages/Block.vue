@@ -61,7 +61,7 @@
             <div class="col-sm-6">Signature</div>
           </div>
         </li>
-        <li v-for="(precommit) in precommits" class="list-group-item">
+        <li v-for="(precommit) in precommits" :key="precommit.body.validator" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">{{ precommit.body.validator }}</div>
             <div class="col-sm-3">{{ $moment($bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</div>
@@ -80,7 +80,7 @@
             <div class="col-sm-9">Hash</div>
           </div>
         </li>
-        <li v-for="(transaction, index) in transactions" class="list-group-item">
+        <li v-for="(transaction, index) in transactions" :key="transaction" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">{{ index }}</div>
             <div class="col-sm-9">
