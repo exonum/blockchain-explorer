@@ -2,6 +2,8 @@
 
 An application for monitoring blocks and transactions in Exonum blockchain.
 
+![Exonum Blockchain Explorer](Screenshot.png)
+
 First, install dependencies:
 
 ```sh
