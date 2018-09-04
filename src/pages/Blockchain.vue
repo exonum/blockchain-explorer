@@ -16,7 +16,7 @@
       <div class="card-header d-flex justify-content-between">
         Latest blocks
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" v-model="isSkipEmpty" v-on:change="skipChange" class="custom-control-input" id="skip-empty-blocks">
+          <input id="skip-empty-blocks" v-model="isSkipEmpty" class="custom-control-input" type="checkbox" @change="skipChange">
           <label class="custom-control-label" for="skip-empty-blocks">Skip empty blocks</label>
         </div>
       </div>
@@ -53,6 +53,7 @@
     data() {
       return {
         blocks: [],
+        mempoolSize: 0,
         isSkipEmpty: false
       }
     },

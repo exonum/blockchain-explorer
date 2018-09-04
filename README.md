@@ -34,12 +34,12 @@ See `allow_origin` parameter in [Exonum docs](https://exonum.com/doc/architectur
 Build sources:
 
 ```sh
-npm run static -- --api-root=http://127.0.0.1:8300
+npm run compile -- --env.apiRoot=http://127.0.0.1:8300
 ```
 
-## Alternatives
+`--env.apiRoot` is a root URL of Exonum node public API.
 
-* [https://github.com/quicky84/exonum-block-explorer](https://github.com/quicky84/exonum-block-explorer)
+Run [index.html](index.html).
 
 ## Use with outdated Exonum core
 
