@@ -6,23 +6,13 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // Get app params
-var argv = require('yargs-parser')(process.argv.slice(2));
-var port = argv.port;
-var apiRoot = argv.apiRoot;
+var config = require('./config.js');
 
-if (typeof port === 'undefined') {
-  throw new Error('--port parameter is not set.');
-}
-
-if (typeof apiRoot === 'undefined') {
-  throw new Error('--api-root parameter is not set.');
-}
-
-app.set('apiRoot', apiRoot);
+app.set('apiRoot', config.apiRoot);
 
 // Configure parsers
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set path to static files
 app.use(express.static(__dirname + '/'));
@@ -36,4 +26,4 @@ app.get('/', function(req, res) {
   res.sendFile('index.html');
 });
 
-app.listen(port);
+app.listen(config.port);
