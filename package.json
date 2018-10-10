@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "author": "Exonum Team <exonum@bitfury.com>",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=6"
+  },
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "compile": "webpack",
@@ -12,7 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "big-integer": "^1.6.35",
+    "big-integer": "^1.6.36",
     "bootstrap": "^4.1.3",
     "moment": "^2.22.2",
     "vue": "^2.5.17",
@@ -27,7 +30,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^8.0.0",
     "body-parser": "^1.18.3",
-    "browserify": "^16.2.2",
+    "browserify": "^16.2.3",
     "css-loader": "^1.0.0",
     "eslint": "^4.19.1",
     "eslint-plugin-vue": "^4.7.1",
@@ -35,11 +38,11 @@
     "regenerator-runtime": "^0.12.1",
     "request": "^2.88.0",
     "string-replace-loader": "^2.1.1",
-    "vue-loader": "^15.4.1",
+    "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
     "vueify": "^9.4.1",
-    "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
     "yargs-parser": "^9.0.2"
   }
 }
