@@ -50,6 +50,7 @@ Explorer compatibility with Exonum core:
 | Core version | Revision |
 |---|---|
 | unreleased | latest |
+| 0.8+ | `d48fbad52b1a4ef39c65136e4caa1b725eacdb57` |
 | 0.6+ | `f373661b8f780309fd3bfa2e351c21daa2a50d95` |
 | 0.1+ | `467b651689d7d4fd369084948ef92a5b0fa11f2a` |
 
