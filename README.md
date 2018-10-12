@@ -45,16 +45,18 @@ Run [index.html](index.html).
 
 ## Use with outdated Exonum core
 
+Explorer compatibility with Exonum core:
+
+| Core version | Revision |
+|---|---|
+| unreleased | latest |
+| 0.6+ | `f373661b8f780309fd3bfa2e351c21daa2a50d95` |
+| 0.1+ | `467b651689d7d4fd369084948ef92a5b0fa11f2a` |
+
 To use explorer with Exonum core 0.8 and below:
 
 ```sh
-git checkout f373661b8f780309fd3bfa2e351c21daa2a50d95 
-```
-
-To use explorer with Exonum core 0.5 and below:
-
-```sh
-git checkout 467b651689d7d4fd369084948ef92a5b0fa11f2a 
+git checkout f373661b8f780309fd3bfa2e351c21daa2a50d95
 ```
 
 ## LICENSE
