@@ -15,37 +15,57 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Height:</strong></div>
-            <div class="col-sm-9">{{ block.height }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.height }}</code>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Previous block hash:</strong></div>
-            <div class="col-sm-9">{{ block.prev_hash }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.prev_hash }}</code>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Proposer ID:</strong></div>
-            <div class="col-sm-9">{{ block.proposer_id }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.proposer_id }}</code>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Blockchain state hash:</strong></div>
-            <div class="col-sm-9">{{ block.state_hash }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.state_hash }}</code>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Transactions count:</strong></div>
-            <div class="col-sm-9">{{ block.tx_count }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.tx_count }}</code>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Hash of transactions tree:</strong></div>
-            <div class="col-sm-9">{{ block.tx_hash }}</div>
+            <div class="col-sm-9">
+              <code>{{ block.tx_hash }}</code>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Time:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ time }}</code>
+            </div>
           </div>
         </li>
       </ul>
@@ -56,16 +76,30 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item font-weight-bold">
           <div class="row">
-            <div class="col-sm-3">Validator</div>
-            <div class="col-sm-3">Time</div>
-            <div class="col-sm-6">Signature</div>
+            <div class="col-sm-2">Validator</div>
+            <div class="col-sm-2">Time</div>
+            <div class="col-sm-2">Round</div>
+            <div class="col-sm-2">Propose hash</div>
+            <div class="col-sm-4">Serialized</div>
           </div>
         </li>
-        <li v-for="(precommit) in precommits" :key="precommit.body.validator" class="list-group-item">
+        <li v-for="(precommit) in precommits" :key="precommit.payload.validator" class="list-group-item">
           <div class="row">
-            <div class="col-sm-3">{{ precommit.body.validator }}</div>
-            <div class="col-sm-3">{{ $moment($bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</div>
-            <div class="col-sm-6">{{ precommit.signature }}</div>
+            <div class="col-sm-2">
+              <code>{{ precommit.payload.validator }}</code>
+            </div>
+            <div class="col-sm-2">
+              <code>{{ $moment($bigInt(precommit.payload.time.secs).multiply(1000000000).plus(precommit.payload.time.nanos) / 1000000).format() }}</code>
+            </div>
+            <div class="col-sm-2">
+              <code>{{ precommit.payload.round }}</code>
+            </div>
+            <div class="col-sm-2">
+              <code>{{ precommit.payload.propose_hash }}</code>
+            </div>
+            <div class="col-sm-4">
+              <code>{{ precommit.message }}</code>
+            </div>
           </div>
         </li>
       </ul>
@@ -82,9 +116,13 @@
         </li>
         <li v-for="(transaction, index) in transactions" :key="transaction" class="list-group-item">
           <div class="row">
-            <div class="col-sm-3">{{ index }}</div>
+            <div class="col-sm-3">
+              <code>{{ index }}</code>
+            </div>
             <div class="col-sm-9">
-              <router-link :to="{ name: 'transaction', params: { hash: transaction } }">{{ transaction }}</router-link>
+              <code>
+                <router-link :to="{ name: 'transaction', params: { hash: transaction } }">{{ transaction }}</router-link>
+              </code>
             </div>
           </div>
         </li>
@@ -120,6 +158,7 @@
       return {
         block: {},
         precommits: [],
+        time: '',
         transactions: []
       }
     },
@@ -143,6 +182,7 @@
         this.$http.get('/api/explorer/v1/block?height=' + this.height).then(response => {
           self.block = response.data.block
           self.precommits = response.data.precommits
+          self.time = response.data.time
           self.transactions = response.data.txs
         }).catch(error => {
           console.error(error)

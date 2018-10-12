@@ -6,7 +6,9 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Size:</strong></div>
-            <div class="col-sm-9">{{ mempoolSize }}</div>
+            <div class="col-sm-9">
+              <code>{{ mempoolSize }}</code>
+            </div>
           </div>
         </li>
       </ul>
@@ -31,10 +33,16 @@
         <li v-for="(block) in blocks" :key="block.height" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <router-link :to="{ name: 'block', params: { height: block.height } }">{{ block.height }}</router-link>
+              <code>
+                <router-link :to="{ name: 'block', params: { height: block.height } }">{{ block.height }}</router-link>
+              </code>
             </div>
-            <div class="col-sm-6">{{ block.state_hash }}</div>
-            <div class="col-sm-3">{{ block.tx_count }}</div>
+            <div class="col-sm-6">
+              <code>{{ block.state_hash }}</code>
+            </div>
+            <div class="col-sm-3">
+              <code>{{ block.tx_count }}</code>
+            </div>
           </div>
         </li>
       </ul>
