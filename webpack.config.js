@@ -4,7 +4,34 @@ const { VueLoaderPlugin } = require('vue-loader')
 require('babel-polyfill')
 
 module.exports = env => {
-  const API_ROOT = (env && env.apiRoot) ? env.apiRoot : ''
+  const rules = [
+    {
+      loader: 'babel-loader'
+    }
+  ]
+
+
+  if (env && env.apiRoot) {
+    rules.push({
+      loader: 'string-replace-loader',
+      options: {
+        multiple: [
+          {
+            search: '/api/explorer/',
+            replace: `${env.apiRoot}/api/explorer/`
+          },
+          {
+            search: '/api/system/',
+            replace: `${env.apiRoot}/api/system/`
+          },
+          {
+            search: 'window.location.host',
+            replace: '"' + env.apiRoot.replace('http://', '') + '"'
+          }
+        ]
+      }
+    })
+  }
 
   return {
     mode: 'development',
@@ -21,23 +48,7 @@ module.exports = env => {
       rules: [
         {
           test: /\.js/,
-          loader: 'string-replace-loader',
-          options: {
-            multiple: [
-              {
-                search: '/api/explorer/',
-                replace: `${API_ROOT}/api/explorer/`,
-              },
-              {
-                search: '/api/system/',
-                replace: `${API_ROOT}/api/system/`,
-              },
-            ]
-          }
-        },
-        {
-          test: /\.js/,
-          use: 'babel-loader'
+          use: rules
         },
         {
           test: /\.vue$/,
