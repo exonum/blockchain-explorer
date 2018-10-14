@@ -91,6 +91,8 @@
 
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
           self.blocks = self.blocks.concat(response.data.blocks)
+          self.webSocket = new WebSocket(`ws://${window.location.host}/api/explorer/v1/blocks/subscribe`)
+          self.webSocket.onmessage = self.handleNewBlock
         }).catch(error => {
           console.error(error)
         })
@@ -101,8 +103,16 @@
       },
 
       skipChange: function() {
-        this.blocks = [];
-        this.loadBlocks();
+        this.blocks = []
+        this.webSocket.close()
+        this.loadBlocks()
+      },
+
+      handleNewBlock(event) {
+        const block = JSON.parse(event.data)
+        if (!this.isSkipEmpty || block.tx_count > 0) {
+          this.blocks.unshift(block)
+        }
       }
     },
     mounted: function() {
@@ -110,6 +120,9 @@
         this.loadMempool()
         this.loadBlocks()
       })
+    },
+    destroyed() {
+      this.webSocket.close()
     }
   }
 </script>
