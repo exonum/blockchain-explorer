@@ -21,7 +21,7 @@ npm run build
 Run app:
 
 ```sh
-npm start -- --port=3000 --api-root=http://127.0.0.1:8300
+npm start -- --port=3000 --api-root=http://127.0.0.1:8200
 ```
 
 `--port` is a port for Node.JS app.
@@ -36,7 +36,7 @@ See `allow_origin` parameter in [Exonum docs](https://exonum.com/doc/architectur
 Build sources:
 
 ```sh
-npm run compile -- --env.apiRoot=http://127.0.0.1:8300
+npm run compile -- --env.apiRoot=http://127.0.0.1:8200
 ```
 
 `--env.apiRoot` is a root URL of Exonum node public API.

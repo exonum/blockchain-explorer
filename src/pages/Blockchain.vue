@@ -99,6 +99,7 @@
       },
 
       loadMore: function() {
+        this.webSocket.close()
         this.loadBlocks(this.blocks[this.blocks.length - 1].height - 1)
       },
 
