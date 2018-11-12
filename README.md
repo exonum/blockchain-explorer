@@ -4,6 +4,25 @@ An application for monitoring blocks and transactions in Exonum blockchain.
 
 ![Exonum Blockchain Explorer](Screenshot.png)
 
+## Use with different Exonum core versions
+
+Explorer compatibility with Exonum core:
+
+| Core version | Tag |
+|---|---|
+| `unreleased` | `latest` |
+| `0.9.*` | `v0.8` |
+| `0.8.*` | `v0.8` |
+| `0.7.*` | `v0.6` |
+| `0.6.*` | `v0.6` |
+| `0.5.*` | `v0.1` |
+| `0.4.0` | `v0.1` |
+| `0.3.0` | `v0.1` |
+| `0.2.0` | `v0.1` |
+| `0.1.*` | `v0.1` |
+
+## Setup
+
 First, install dependencies:
 
 ```sh
@@ -42,23 +61,6 @@ npm run compile -- --env.apiRoot=http://127.0.0.1:8200
 `--env.apiRoot` is a root URL of Exonum node public API.
 
 Run [index.html](index.html).
-
-## Use with outdated Exonum core
-
-Explorer compatibility with Exonum core:
-
-| Core version | Revision |
-|---|---|
-| unreleased | latest |
-| 0.8+ | `d48fbad52b1a4ef39c65136e4caa1b725eacdb57` |
-| 0.6+ | `f373661b8f780309fd3bfa2e351c21daa2a50d95` |
-| 0.1+ | `467b651689d7d4fd369084948ef92a5b0fa11f2a` |
-
-To use explorer with Exonum core 0.8 and below:
-
-```sh
-git checkout f373661b8f780309fd3bfa2e351c21daa2a50d95
-```
 
 ## LICENSE
 
