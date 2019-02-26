@@ -41,24 +41,58 @@
             </div>
           </div>
         </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Position in block:</strong></div>
+            <div class="col-sm-9">
+              <code v-if="location.position_in_block">
+                {{ location.position_in_block }}
+              </code>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
 
     <div class="card mt-3">
       <div class="card-header">Content</div>
-      <ul class="list-group list-group-flush">
-        <li v-if="content.message" class="list-group-item">
+      <ul v-if="content" class="list-group list-group-flush">
+        <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Serialized:</strong></div>
+            <div class="col-sm-3"><strong>Message ID:</strong></div>
             <div class="col-sm-9">
-              <code>{{ content.message }}</code>
+              <code>{{ content.message_id }}</code>
             </div>
           </div>
         </li>
-        <li v-if="content.debug" class="list-group-item">
+        <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Debug:</strong></div>
-            <div class="col-sm-9"><pre><code>{{ JSON.stringify(content.debug, null, 2) }}</code></pre></div>
+            <div class="col-sm-3"><strong>Service ID:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ content.service_id }}</code>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Protocol version:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ content.protocol_version }}</code>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Signature:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ content.signature }}</code>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Body:</strong></div>
+            <div class="col-sm-9"><pre><code>{{ JSON.stringify(content.body, null, 2) }}</code></pre></div>
           </div>
         </li>
       </ul>
@@ -81,12 +115,12 @@
     },
     methods: {
       loadTransaction: function() {
-        const self = this
+        const self = this;
 
         this.$http.get('/api/explorer/v1/transactions?hash=' + this.hash).then(response => {
-          self.content = response.data.content
-          self.location = response.data.location
-          self.type = response.data.type
+          self.content = response.data.content;
+          self.location = response.data.location;
+          self.type = response.data.type;
           self.status = response.data.status
         }).catch(error => {
           console.error(error)

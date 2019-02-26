@@ -80,25 +80,25 @@
             <div class="col-sm-2">Time</div>
             <div class="col-sm-2">Round</div>
             <div class="col-sm-2">Propose hash</div>
-            <div class="col-sm-4">Serialized</div>
+            <div class="col-sm-4">Signature</div>
           </div>
         </li>
-        <li v-for="(precommit) in precommits" :key="precommit.payload.validator" class="list-group-item">
+        <li v-for="(precommit) in precommits" :key="precommit.body.validator" class="list-group-item">
           <div class="row">
             <div class="col-sm-2">
-              <code>{{ precommit.payload.validator }}</code>
+              <code>{{ precommit.body.validator }}</code>
             </div>
             <div class="col-sm-2">
-              <code>{{ $moment($bigInt(precommit.payload.time.secs).multiply(1000000000).plus(precommit.payload.time.nanos) / 1000000).format() }}</code>
+              <code>{{ $moment($bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</code>
             </div>
             <div class="col-sm-2">
-              <code>{{ precommit.payload.round }}</code>
+              <code>{{ precommit.body.round }}</code>
             </div>
             <div class="col-sm-2">
-              <code>{{ precommit.payload.propose_hash }}</code>
+              <code>{{ precommit.body.propose_hash }}</code>
             </div>
             <div class="col-sm-4">
-              <code>{{ precommit.message }}</code>
+              <code>{{ precommit.signature }}</code>
             </div>
           </div>
         </li>
@@ -180,9 +180,9 @@
         const self = this
 
         this.$http.get('/api/explorer/v1/block?height=' + this.height).then(response => {
-          self.block = response.data.block
-          self.precommits = response.data.precommits
-          self.time = response.data.time
+          self.block = response.data.block;
+          self.precommits = response.data.precommits;
+          self.time = response.data.time;
           self.transactions = response.data.txs
         }).catch(error => {
           console.error(error)
