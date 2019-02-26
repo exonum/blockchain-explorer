@@ -6,7 +6,7 @@
           <router-link :to="{ name: 'blockchain' }">Explorer</router-link>
         </li>
         <li class="breadcrumb-item">
-          <router-link v-if="location.block_height" :to="{ name: 'block', params: { height: location.block_height } }">Block {{ location.block_height }}</router-link>
+          <router-link v-if="location.block_height" :to="{ name: 'block', params: { height: location.block_height.toString() } }">Block {{ location.block_height }}</router-link>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Transaction {{ hash }}</li>
       </ol>
@@ -31,21 +31,21 @@
             </div>
           </div>
         </li>
-        <li class="list-group-item">
+        <li v-if="location.block_height" class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Block:</strong></div>
             <div class="col-sm-9">
               <code>
-                <router-link v-if="location.block_height" :to="{ name: 'block', params: { height: location.block_height } }">{{ location.block_height }}</router-link>
+                <router-link :to="{ name: 'block', params: { height: location.block_height } }">{{ location.block_height }}</router-link>
               </code>
             </div>
           </div>
         </li>
-        <li class="list-group-item">
+        <li v-if="location.position_in_block" class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Position in block:</strong></div>
             <div class="col-sm-9">
-              <code v-if="location.position_in_block">
+              <code>
                 {{ location.position_in_block }}
               </code>
             </div>
@@ -56,43 +56,19 @@
 
     <div class="card mt-3">
       <div class="card-header">Content</div>
-      <ul v-if="content" class="list-group list-group-flush">
-        <li class="list-group-item">
+      <ul class="list-group list-group-flush">
+        <li v-if="content.message" class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Message ID:</strong></div>
+            <div class="col-sm-3"><strong>Serialized:</strong></div>
             <div class="col-sm-9">
-              <code>{{ content.message_id }}</code>
+              <code>{{ content.message }}</code>
             </div>
           </div>
         </li>
-        <li class="list-group-item">
+        <li v-if="content.debug" class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Service ID:</strong></div>
-            <div class="col-sm-9">
-              <code>{{ content.service_id }}</code>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Protocol version:</strong></div>
-            <div class="col-sm-9">
-              <code>{{ content.protocol_version }}</code>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Signature:</strong></div>
-            <div class="col-sm-9">
-              <code>{{ content.signature }}</code>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Body:</strong></div>
-            <div class="col-sm-9"><pre><code>{{ JSON.stringify(content.body, null, 2) }}</code></pre></div>
+            <div class="col-sm-3"><strong>Debug:</strong></div>
+            <div class="col-sm-9"><pre><code>{{ JSON.stringify(content.debug, null, 2) }}</code></pre></div>
           </div>
         </li>
       </ul>
