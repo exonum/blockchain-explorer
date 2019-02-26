@@ -74,31 +74,10 @@
     <div class="card mt-3">
       <div class="card-header">Precommits</div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item font-weight-bold">
+        <li v-for="(precommit) in precommits" :key="precommit" class="list-group-item">
           <div class="row">
-            <div class="col-sm-2">Validator</div>
-            <div class="col-sm-2">Time</div>
-            <div class="col-sm-2">Round</div>
-            <div class="col-sm-2">Propose hash</div>
-            <div class="col-sm-4">Signature</div>
-          </div>
-        </li>
-        <li v-for="(precommit) in precommits" :key="precommit.body.validator" class="list-group-item">
-          <div class="row">
-            <div class="col-sm-2">
-              <code>{{ precommit.body.validator }}</code>
-            </div>
-            <div class="col-sm-2">
-              <code>{{ $moment($bigInt(precommit.body.time.secs).multiply(1000000000).plus(precommit.body.time.nanos) / 1000000).format() }}</code>
-            </div>
-            <div class="col-sm-2">
-              <code>{{ precommit.body.round }}</code>
-            </div>
-            <div class="col-sm-2">
-              <code>{{ precommit.body.propose_hash }}</code>
-            </div>
-            <div class="col-sm-4">
-              <code>{{ precommit.signature }}</code>
+            <div class="col-sm-12">
+              <code>{{ precommit }}</code>
             </div>
           </div>
         </li>

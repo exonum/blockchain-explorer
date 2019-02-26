@@ -34,7 +34,7 @@
           <div class="row">
             <div class="col-sm-3">
               <code>
-                <router-link :to="{ name: 'block', params: { height: block.height } }">{{ block.height }}</router-link>
+                <router-link :to="{ name: 'block', params: { height: block.height.toString() } }">{{ block.height }}</router-link>
               </code>
             </div>
             <div class="col-sm-6">
