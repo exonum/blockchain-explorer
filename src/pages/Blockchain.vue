@@ -54,8 +54,8 @@
 </template>
 
 <script>
-  const POOLING_INTERVAL = 3000
-  const PER_PAGE = 10
+  const POOLING_INTERVAL = 3000;
+  const PER_PAGE = 10;
 
   module.exports = {
     data() {
@@ -67,10 +67,10 @@
     },
     methods: {
       loadMempool: function() {
-        const self = this
+        const self = this;
 
         this.$http.get('/api/system/v1/mempool').then(response => {
-          self.mempoolSize = response.data.size
+          self.mempoolSize = response.data.size;
           setTimeout(self.loadMempool, POOLING_INTERVAL)
         }).catch(error => {
           console.error(error)
@@ -78,8 +78,8 @@
       },
 
       loadBlocks: function(latest) {
-        const self = this
-        let suffix = ''
+        const self = this;
+        let suffix = '';
 
         if (!isNaN(parseInt(latest))) {
           suffix += '&latest=' + latest
@@ -90,8 +90,8 @@
         }
 
         this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
-          self.blocks = self.blocks.concat(response.data.blocks)
-          self.webSocket = new WebSocket(`ws://${window.location.host}/api/explorer/v1/blocks/subscribe`)
+          self.blocks = self.blocks.concat(response.data.blocks);
+          self.webSocket = new WebSocket(`ws://${window.location.host}/api/explorer/v1/blocks/subscribe`);
           self.webSocket.onmessage = self.handleNewBlock
         }).catch(error => {
           console.error(error)
@@ -99,18 +99,18 @@
       },
 
       loadMore: function() {
-        this.webSocket.close()
+        this.webSocket.close();
         this.loadBlocks(this.blocks[this.blocks.length - 1].height - 1)
       },
 
       skipChange: function() {
-        this.blocks = []
-        this.webSocket.close()
+        this.blocks = [];
+        this.webSocket.close();
         this.loadBlocks()
       },
 
       handleNewBlock(event) {
-        const block = JSON.parse(event.data)
+        const block = JSON.parse(event.data);
         if (!this.isSkipEmpty || block.tx_count > 0) {
           this.blocks.unshift(block)
         }
@@ -118,7 +118,7 @@
     },
     mounted: function() {
       this.$nextTick(function() {
-        this.loadMempool()
+        this.loadMempool();
         this.loadBlocks()
       })
     },

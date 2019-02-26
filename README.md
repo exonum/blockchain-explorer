@@ -10,7 +10,7 @@ Explorer compatibility with Exonum core:
 
 | Core version | Tag |
 |---|---|
-| `unreleased` | `latest` |
+| `0.10.*` | `v0.9` |
 | `0.9.*` | `v0.8` |
 | `0.8.*` | `v0.8` |
 | `0.7.*` | `v0.6` |
