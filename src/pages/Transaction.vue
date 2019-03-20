@@ -36,7 +36,7 @@
             <div class="col-sm-3"><strong>Block:</strong></div>
             <div class="col-sm-9">
               <code>
-                <router-link :to="{ name: 'block', params: { height: location.block_height } }">{{ location.block_height }}</router-link>
+                <router-link :to="{ name: 'block', params: { height: location.block_height.toString() } }">{{ location.block_height }}</router-link>
               </code>
             </div>
           </div>
