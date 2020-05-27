@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-sm-3"><strong>Height:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.height }}</code>
+              <code>{{ height }}</code>
             </div>
           </div>
         </li>
@@ -24,7 +24,7 @@
           <div class="row">
             <div class="col-sm-3"><strong>Previous block hash:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.prev_hash }}</code>
+              <code>{{ prev_hash }}</code>
             </div>
           </div>
         </li>
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col-sm-3"><strong>Proposer ID:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.proposer_id }}</code>
+              <code>{{ proposer_id }}</code>
             </div>
           </div>
         </li>
@@ -40,7 +40,15 @@
           <div class="row">
             <div class="col-sm-3"><strong>Blockchain state hash:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.state_hash }}</code>
+              <code>{{ state_hash }}</code>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Error hash:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ error_hash }}</code>
             </div>
           </div>
         </li>
@@ -48,7 +56,7 @@
           <div class="row">
             <div class="col-sm-3"><strong>Transactions count:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.tx_count }}</code>
+              <code>{{ tx_count }}</code>
             </div>
           </div>
         </li>
@@ -56,7 +64,7 @@
           <div class="row">
             <div class="col-sm-3"><strong>Hash of transactions tree:</strong></div>
             <div class="col-sm-9">
-              <code>{{ block.tx_hash }}</code>
+              <code>{{ tx_hash }}</code>
             </div>
           </div>
         </li>
@@ -93,14 +101,14 @@
             <div class="col-sm-9">Hash</div>
           </div>
         </li>
-        <li v-for="(transaction, index) in transactions" :key="transaction" class="list-group-item">
+        <li v-for="(transaction, index) in transactions" :key="index" class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
               <code>{{ index }}</code>
             </div>
             <div class="col-sm-9">
               <code>
-                <router-link :to="{ name: 'transaction', params: { hash: transaction } }">{{ transaction }}</router-link>
+                <router-link :to="{ name: 'transaction', params: { hash: transaction.tx_hash } }">{{ transaction.tx_hash }}</router-link>
               </code>
             </div>
           </div>
@@ -131,11 +139,19 @@
 <script>
   module.exports = {
     props: {
-      height: String
+      height: {
+        type: String,
+        defaultValue: ""
+      }
     },
     data: function() {
       return {
-        block: {},
+        tx_count: String,
+        prev_hash: String,
+        tx_hash: String,
+        state_hash: String,
+        error_hash: String,
+        proposer_id: String,
         precommits: [],
         time: '',
         transactions: []
@@ -158,8 +174,13 @@
       loadBlock: function() {
         const self = this
 
-        this.$http.get('/api/explorer/v1/block?height=' + this.height).then(response => {
-          self.block = response.data.block;
+        this.$http.get('/public/api/explorer/v1/block?height=' + this.height).then(response => {
+          self.tx_count = response.data.tx_count;
+          self.prev_hash = response.data.prev_hash;
+          self.tx_hash = response.data.tx_hash;
+          self.state_hash = response.data.state_hash;
+          self.error_hash = response.data.error_hash;
+          self.proposer_id = response.data.additional_headers.headers.proposer_id[0];
           self.precommits = response.data.precommits;
           self.time = response.data.time;
           self.transactions = response.data.txs

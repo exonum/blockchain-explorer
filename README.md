@@ -10,6 +10,7 @@ Explorer compatibility with Exonum core:
 
 | Core version | Tag |
 |---|---|
+| `1.0.*` | `v0.11` |
 | `0.10.*` | `v0.10` |
 | `0.9.*` | `v0.9` |
 | `0.8.*` | `v0.8` |
@@ -40,25 +41,17 @@ npm run build
 Run app:
 
 ```sh
-npm start -- --port=3000 --api-root=http://127.0.0.1:8200
+npm start -- --port=3000 --public-api-root=http://127.0.0.1:8200 --private-api-root=http://127.0.0.1:8201
 ```
 
-`--port` is a port for Node.JS app.
-
-`--api-root` is a root URL of Exonum node public API.
+- `--port` is a port for Node.JS app.
+- `--public-api-root` is a root URL of Exonum node public API.
+- `--private-api-root` is a root URL of Exonum node private API.
 
 ## Build a static html pages
 
 CORS headers must be setted up in Exonum node configuration to use the application as static html pages.
 See `allow_origin` parameter in [Exonum docs](https://exonum.com/doc/architecture/configuration/#api).
-
-Build sources:
-
-```sh
-npm run compile -- --env.apiRoot=http://127.0.0.1:8200
-```
-
-`--env.apiRoot` is a root URL of Exonum node public API.
 
 Run [index.html](index.html).
 
