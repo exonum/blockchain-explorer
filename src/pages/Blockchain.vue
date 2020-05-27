@@ -1,13 +1,25 @@
 <template>
   <div>
     <div class="card">
-      <div class="card-header">Mempool</div>
+      <div class="card-header"><strong>Blockchain statistics</strong></div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3"><strong>Size:</strong></div>
+            <div class="col-sm-3"><strong>Tx pool size:</strong></div>
             <div class="col-sm-9">
-              <code>{{ mempoolSize }}</code>
+              <code>{{ storage_info.tx_pool_size }}</code>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3"><strong>Tx cache size:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ storage_info.tx_cache_size }}</code>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3"><strong>Tx proceeded:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ storage_info.tx_count }}</code>
             </div>
           </div>
         </li>
@@ -61,17 +73,17 @@
     data() {
       return {
         blocks: [],
-        mempoolSize: 0,
+        storage_info: {},
         isSkipEmpty: false
       }
     },
-    methods: {
-      loadMempool: function() {
-        const self = this;
 
-        this.$http.get('/api/system/v1/mempool').then(response => {
-          self.mempoolSize = response.data.size;
-          setTimeout(self.loadMempool, POOLING_INTERVAL)
+    methods: {
+      loadStats: function() {
+        const self = this;
+        this.$http.get('/private/api/system/v1/stats').then(response => {
+          self.storage_info = response.data;
+          setTimeout(self.loadStats, POOLING_INTERVAL)
         }).catch(error => {
           console.error(error)
         })
@@ -89,9 +101,9 @@
           suffix += '&skip_empty_blocks=true'
         }
 
-        this.$http.get('/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
+        this.$http.get('/public/api/explorer/v1/blocks?count=' + PER_PAGE + suffix).then(response => {
           self.blocks = self.blocks.concat(response.data.blocks);
-          self.webSocket = new WebSocket(`ws://${window.location.host}/api/explorer/v1/blocks/subscribe`);
+          self.webSocket = new WebSocket(`ws://${window.location.host}/public/api/explorer/v1/blocks/subscribe`);
           self.webSocket.onmessage = self.handleNewBlock
         }).catch(error => {
           console.error(error)
@@ -112,13 +124,15 @@
       handleNewBlock(event) {
         const block = JSON.parse(event.data);
         if (!this.isSkipEmpty || block.tx_count > 0) {
-          this.blocks.unshift(block)
+          console.log(this.blocks);
+          this.blocks.pop();
+          this.blocks.unshift(block);
         }
       }
     },
     mounted: function() {
       this.$nextTick(function() {
-        this.loadMempool();
+        this.loadStats();
         this.loadBlocks()
       })
     },

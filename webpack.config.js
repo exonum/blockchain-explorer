@@ -10,29 +10,6 @@ module.exports = env => {
     }
   ]
 
-
-  if (env && env.apiRoot) {
-    rules.push({
-      loader: 'string-replace-loader',
-      options: {
-        multiple: [
-          {
-            search: '/api/explorer/',
-            replace: `${env.apiRoot}/api/explorer/`
-          },
-          {
-            search: '/api/system/',
-            replace: `${env.apiRoot}/api/system/`
-          },
-          {
-            search: 'window.location.host',
-            replace: '"' + env.apiRoot.replace('http://', '') + '"'
-          }
-        ]
-      }
-    })
-  }
-
   return {
     mode: 'development',
     entry: [

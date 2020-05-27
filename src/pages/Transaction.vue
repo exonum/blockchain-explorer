@@ -31,6 +31,14 @@
             </div>
           </div>
         </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3"><strong>Time:</strong></div>
+            <div class="col-sm-9">
+              <code>{{ time }}</code>
+            </div>
+          </div>
+        </li>
         <li v-if="location.block_height" class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Block:</strong></div>
@@ -57,18 +65,12 @@
     <div class="card mt-3">
       <div class="card-header">Content</div>
       <ul class="list-group list-group-flush">
-        <li v-if="content.message" class="list-group-item">
+        <li v-if="content" class="list-group-item">
           <div class="row">
             <div class="col-sm-3"><strong>Serialized:</strong></div>
             <div class="col-sm-9">
-              <code>{{ content.message }}</code>
+              <code>{{ content }}</code>
             </div>
-          </div>
-        </li>
-        <li v-if="content.debug" class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3"><strong>Debug:</strong></div>
-            <div class="col-sm-9"><pre><code>{{ JSON.stringify(content.debug, null, 2) }}</code></pre></div>
           </div>
         </li>
       </ul>
@@ -86,18 +88,20 @@
         content: {},
         location: {},
         type: '',
-        status: {}
+        status: {},
+        time: ''
       }
     },
     methods: {
       loadTransaction: function() {
         const self = this;
 
-        this.$http.get('/api/explorer/v1/transactions?hash=' + this.hash).then(response => {
-          self.content = response.data.content;
+        this.$http.get('/public/api/explorer/v1/transactions?hash=' + this.hash).then(response => {
+          self.content = response.data.message;
           self.location = response.data.location;
           self.type = response.data.type;
-          self.status = response.data.status
+          self.status = response.data.status;
+          self.time = response.data.time;
         }).catch(error => {
           console.error(error)
         })
