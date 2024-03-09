@@ -7,7 +7,7 @@ import {
     TxFinalizeVotingWithResults, TxPublishDecryptedBallot
 } from '../proto_compiled/transactions_pb';
 
-export function hexadecimalToUint8Array(str) {
+function hexadecimalToUint8Array(str) {
     if (typeof str !== 'string') {
         throw new TypeError('Wrong data type passed to convertor. Hexadecimal string is expected')
     }
@@ -30,47 +30,47 @@ export function hexadecimalToUint8Array(str) {
     return uint8arr
 }
 
-export function decodeTxCreateVoting(coreMessage) {
+function decodeTxCreateVoting(coreMessage) {
     return TxCreateVoting.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxRegisterVoters(coreMessage) {
+function decodeTxRegisterVoters(coreMessage) {
     return TxRegisterVoters.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxStopRegistration(coreMessage) {
+function decodeTxStopRegistration(coreMessage) {
     return TxStopRegistration.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxRevokeVoterParticipation(coreMessage) {
+function decodeTxRevokeVoterParticipation(coreMessage) {
     return TxRevokeVoterParticipation.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxIssueBallot(coreMessage) {
+function decodeTxIssueBallot(coreMessage) {
     return TxIssueBallot.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxAddVoterKey(coreMessage) {
+function decodeTxAddVoterKey(coreMessage) {
     return TxAddVoterKey.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxStoreBallot(coreMessage) {
+function decodeTxStoreBallot(coreMessage) {
     return TxStoreBallot.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxStopVoting(coreMessage) {
+function decodeTxStopVoting(coreMessage) {
     return TxStopVoting.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxPublishDecryptionKey(coreMessage) {
+function decodeTxPublishDecryptionKey(coreMessage) {
     return TxPublishDecryptionKey.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxDecryptBallot(coreMessage) {
+function decodeTxDecryptBallot(coreMessage) {
     return TxDecryptBallot.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxFinalizeVoting(coreMessage) {
+function decodeTxFinalizeVoting(coreMessage) {
     return TxFinalizeVoting.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxFinalizeVotingWithResults(coreMessage) {
+function decodeTxFinalizeVotingWithResults(coreMessage) {
     return TxFinalizeVotingWithResults.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
-export function decodeTxPublishDecryptedBallot(coreMessage) {
+function decodeTxPublishDecryptedBallot(coreMessage) {
     return TxPublishDecryptedBallot.deserializeBinary(coreMessage.getAnyTx().getArguments());
 }
 
-export function getDecoderFunctionById(identifier) {
+function getDecoderFunctionById(identifier) {
     const decoders = {
         0: decodeTxCreateVoting,
         1: decodeTxRegisterVoters,
@@ -89,6 +89,25 @@ export function getDecoderFunctionById(identifier) {
     return decoders[identifier];
 };
 
+export function getNameById(identifier) {
+    const names = {
+        0: "Create voting",
+        1: "Register voters",
+        2: "Stop registration",
+        3: "Revoke voter participation",
+        4: "Issue ballot",
+        5: "Add voter key",
+        6: "Store ballot",
+        7: "Stop voting",
+        8: "Publish decryption key",
+        9: "Decrypt ballot",
+        10: "Finalize voting",
+        11: "Finalize voting with results",
+        12: "Publish decrypted ballot",
+    };
+    return names[identifier];
+};
+
 
 export function decodeTransaction(response) {
     const binaryArray = hexadecimalToUint8Array(response.data.message);
@@ -99,7 +118,6 @@ export function decodeTransaction(response) {
     var txObject = null;
     if (decoderFunction) {
         if (coreMessage.getAnyTx()) {
-            // Assume binaryArray is obtained from your protobuf message
             const txDecode = decoderFunction(coreMessage);
             txObject = txDecode.toObject();
         } else {
@@ -111,6 +129,5 @@ export function decodeTransaction(response) {
     var object = signedMessage.toObject();
     object.payload = coreMessage.toObject();
     object.payload.anyTx.arguments = txObject;
-    return JSON.stringify(object, null, 2);
-
+    return object;
 }
